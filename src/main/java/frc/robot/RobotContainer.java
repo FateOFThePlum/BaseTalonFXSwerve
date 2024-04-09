@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -48,6 +49,8 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
+        /* Register named commands for Pathplanner */
+        //NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
 
         // Configure the button bindings
         configureButtonBindings();
