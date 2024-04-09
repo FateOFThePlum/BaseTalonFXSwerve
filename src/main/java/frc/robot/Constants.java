@@ -4,10 +4,13 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.lib.util.COTSTalonFXSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
@@ -19,7 +22,7 @@ public final class Constants {
         public static final int pigeonID = 1; //TODO: Will have to wait until we wire the robot
 
         public static final COTSTalonFXSwerveConstants chosenModule =  //TODO: This must be tuned to specific robot
-        COTSTalonFXSwerveConstants.SDS.MK4.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4.driveRatios.L2);//What I would Like to get in terms of motor and modules
+        COTSTalonFXSwerveConstants.SDS.MK4.KrakenX60(COTSTalonFXSwerveConstants.SDS.MK4.driveRatios.L2);//What I would Like to get in terms of motor and modules
 
         /* Drivetrain Constants */
         //Will have to wait until we get the robot built
@@ -69,8 +72,8 @@ public final class Constants {
 
         /* Drive Motor PID Values */
         public static final double driveKP = 0.12; //TODO: This must be tuned to specific robot
-        public static final double driveKI = 0.0;
-        public static final double driveKD = 0.0;
+        public static final double driveKI = 0.0;//Get Drive Motor Characterisation values and then adjust KP so it is doesnt oscilate
+        public static final double driveKD = 0.0;//Leave KI, KD, KF at 0
         public static final double driveKF = 0.0;
 
         /* Drive Motor Characterization Values From SYSID */
@@ -134,20 +137,15 @@ public final class Constants {
         }
     }
 
-    //Will have to wait until we build the robot
-    public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
-    
-        public static final double kPXController = 1;
-        public static final double kPYController = 1;
-        public static final double kPThetaController = 1;
-    
-        /* Constraint for the motion profilied robot angle controller */
-        public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
-            new TrapezoidProfile.Constraints(
-                kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+    public static final class Autonomous{
+        public static HolonomicPathFollowerConfig PathFollowerConfig =  new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+                    Constants.Swerve.maxSpeed, // Max module speed, in m/s
+                    0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+                    new ReplanningConfig() // Default path replanning config. See the API for the options here
+            );
     }
+
+
 }

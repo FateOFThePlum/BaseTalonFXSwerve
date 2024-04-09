@@ -1,7 +1,6 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.PathPlannerAuto;//TODO: Check to see if this will ever be needed and delete is not. 
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -11,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-import frc.robot.autos.*;//TODO: Check to see if this will ever be needed and delete is not. 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
