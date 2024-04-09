@@ -39,7 +39,6 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        //TODO: Implement Named Commands, Implement Re-zeroing pose via limelight??? 
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
@@ -50,8 +49,11 @@ public class RobotContainer {
             )
         );
         /* Register named commands for Pathplanner */
-        //NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
-
+        /*NamedCommands.registerCommand("autoBalance", //Name used in pathplanner gui. 
+                                    swerve.autoBalanceCommand());
+        */
+        //TODO: Implement Rezeroing via Limelight, (wait 20ms, read network table for 100ms, average results then, set pose to averaged limelight pose.)
+        
         // Configure the button bindings
         configureButtonBindings();
     }
